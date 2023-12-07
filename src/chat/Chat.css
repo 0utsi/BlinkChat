@@ -1,0 +1,15 @@
+.chat {
+	border: 1px solid white;
+	height: 80vh;
+	width: 30vw;
+}
+
+main {
+	overflow-y: scroll;
+	display: flex;
+	flex-direction: column;
+}
+
+.send {
+	width: 100%;
+}
