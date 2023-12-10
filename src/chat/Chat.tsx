@@ -1,52 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-
+import './Chat.css'
 const socket = io("http://localhost:5174");
 
 export default function ChatRoom() {
-  // Room State
-  const [room, setRoom] = useState("");
+	socket.connect();
+	const [message, setMessage] = useState('')
+	const [messages, setMessages] = useState<Array<{message: string, socketId: string}>>([]);
 
-  // Messages States
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+	const sendMessage = (e: { preventDefault: () => void; }) => {
+		e.preventDefault()
+		const messageData = {
+			message,
+			socketId: socket.id,
+		};
+		setMessages(prevMessages => [...prevMessages, messageData]);
+		console.log(messageData)
+		socket.emit("send_message", messageData);
+	};
 
-  const joinRoom = () => {
-    if (room !== "") {
-      socket.emit("join_room", room);
-    }
-  };
-
-  const sendMessage = () => {
-    socket.emit("send_message", { message, room });
-  };
-
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      setMessages(prevMessages => [...prevMessages, data.message]);
-    });
-  }, [socket]);
+	useEffect(() => {
+		socket.on("receive_message", (data) => {
+			setMessages(prevMessages => [...prevMessages, data]);
+		})
+		return function off() {
+			socket.removeListener("receive_message");
+		};
+	});
 
   return (
-    <div className="App">
+    <div className="chat">
+			<main>
+			{messages.map((msg, index) => (
+				<div key={index} className='message'>
+				<p>{msg.message}</p>
+				<p>{msg.socketId}</p>
+				</div>
+			))}
+			</main>
       <input
-        placeholder="Room Number..."
-        onChange={(event) => {
-          setRoom(event.target.value);
-        }}
-      />
-      <button onClick={joinRoom}> Join Room</button>
-      <input
-        placeholder="Message..."
+        placeholder="Type.."
+		className='msg-input'
         onChange={(event) => {
           setMessage(event.target.value);
         }}
       />
-      <button onClick={sendMessage}> Send Message</button>
-      <h1> Messages:</h1>
-      {messages.map((msg, index) => (
-        <p key={index}>{msg}</p>
-      ))}
+	<button className='sendBtn' onClick={sendMessage}>
+		<svg height="24" id="Layer_21" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+			<polygon points="3 12 8.61 14.992 17 8 9 17.455 9 21 12.164 16.887 18 20 21 3 3 12"/>
+		</svg>
+	</button>
+
     </div>
   );
 }
