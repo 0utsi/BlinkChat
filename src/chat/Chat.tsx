@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import './Chat.css'
 const socket = io("http://localhost:5174");
@@ -7,7 +7,7 @@ export default function ChatRoom() {
 	socket.connect();
 	const [message, setMessage] = useState('')
 	const [messages, setMessages] = useState<Array<{message: string, socketId: string}>>([]);
-
+	const scrollRef = useRef(null)
 	const sendMessage = (e: { preventDefault: () => void; }) => {
 		e.preventDefault()
 		if(message.length === 0) return
@@ -30,6 +30,10 @@ export default function ChatRoom() {
 		};
 	});
 
+	useEffect(() => {
+		scrollRef.current.scrollIntoView()
+	},[messages])
+
   return (
     <div className="chat">
 		<main>
@@ -38,6 +42,7 @@ export default function ChatRoom() {
 				<p>{msg.message}</p>
 				</div>
 			))}
+			<div ref={scrollRef} />
 		</main>
 		<form className="manage">
 		<input
