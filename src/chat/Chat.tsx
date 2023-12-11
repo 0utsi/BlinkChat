@@ -10,18 +10,21 @@ export default function ChatRoom() {
 
 	const sendMessage = (e: { preventDefault: () => void; }) => {
 		e.preventDefault()
+		if(message.length === 0) return
 		const messageData = {
 			message,
 			socketId: socket.id,
 		};
 		setMessages(prevMessages => [...prevMessages, messageData]);
 		socket.emit("send_message", messageData);
+		setMessage('')
 	};
 
 	useEffect(() => {
 		socket.on("receive_message", (data) => {
 			setMessages(prevMessages => [...prevMessages, data]);
 		})
+
 		return function off() {
 			socket.removeListener("receive_message");
 		};
@@ -36,10 +39,11 @@ export default function ChatRoom() {
 				</div>
 			))}
 		</main>
-		<div className="manage">
+		<form className="manage">
 		<input
 			placeholder="Type.."
 			className='msg-input'
+			value={message}
 			onChange={(event) => {
 			setMessage(event.target.value);
 			}}
@@ -49,7 +53,7 @@ export default function ChatRoom() {
 				<polygon fill="white" points="3 12 8.61 14.992 17 8 9 17.455 9 21 12.164 16.887 18 20 21 3 3 12"/>
 			</svg>
 		</button>
-		</div>
+		</form>
 
     </div>
   );
