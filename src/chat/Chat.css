@@ -1,58 +1,55 @@
 .chat {
-	height: 80vh;
+	height: 30rem;
+	width: 20rem;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-	font-size: 0.75rem;
-	width: 50vw;
 	display: flex;
 	flex-direction: column;
-	border-radius: 2rem;
+	border-radius: 0.23rem;
 	box-shadow:
-				0 0 0.05vw 0.05vw #e0f7fa,
-				0 0 0.2vw 0.1vw #00e5ff,
-				0 0 0.5vw 0.05vw #26c6da,
-				inset 0 0 0.05vw 0.05vw #e0f7fa,
-				inset 0 0 0.2vw 0.1vw #00e5ff,
-				inset 0 0 0.5vw 0.05vw #26c6da;;
+			0 0 1px 1px #e0f7fa,
+			0 0 4px 2px #00e5ff,
+			0 0 20px 1px #26c6da,
+			inset 0 0 1px 1px #e0f7fa,
+			inset 0 0 4px 2px #00e5ff,
+			inset 0 0 10px 1px #26c6da;
 }
 
 main {
 	overflow-y: scroll;
 	display: flex;
 	scroll-behavior: smooth;
-	gap: 1.5rem;
+	gap: 0.75rem;
 	flex-direction: column;
 	height: 100vh;
 	padding: 1rem;
-	border-bottom: 1px solid rgb(66, 66, 78);
-	margin: 30px 20px 20px 20px;
+	border-bottom: 1px solid rgb(47, 47, 57);
+	margin: 10px 10px 10px 10px;
 	overflow-anchor: none;
 }
 
 .msg-input {
 	display: block;
-	height: 3rem;
-	width: 85%;
-	margin: 0 0 15px 20px;
-	font-size: 1rem;
-	background: #242424;
+	height: 2rem;
+	width: 80%;
+	margin: 0 0 15px 15px;
+	font-size: 0.75rem;
 	color: white;
 	outline: none;
 	border: none;
-	border-radius: 0.5rem;
-	padding: 0 10px;
-	-webkit-box-shadow: 0px 0px 12px -2px rgba(86, 94, 154, 1);
-	-moz-box-shadow: 0px 0px 12px -2px rgba(86, 94, 154, 1);
-	box-shadow: 0px 0px 12px -2px rgba(86, 94, 154, 1);
+	border-radius: 0.25rem;
+	padding: 0 5px;
 }
 
 .sendBtn {
-	margin: 0;
+	margin: 0 0.5rem 0.75rem 0;
 	background-color: inherit;
 	border: none;
 }
 
   .sendBtn:hover {
 	cursor: pointer;
+	transform: scale(1.1);
+	transition: all 0.4s;
   }
 
   .manage {
@@ -63,20 +60,24 @@ main {
   }
 
   .message {
+	font-size: 0.65rem;
+	letter-spacing: 0.2px;
+	line-height: 1.2;
+	border-radius: 5px;
 	display: block;
-	border: 1px solid rgb(116, 116, 146);
-	max-width: 15rem;
-	min-width: 3rem;
+	max-width: 12rem;
+	min-width: 2rem;
 	height: fit-content;
-	padding: 0.1rem 1rem 0.1rem 1rem;
-	border-radius: 0.35rem;
+	padding: 0 1px 0 3px;
   }
 
   .from {
 	align-self: flex-end;
+	background-color: #3432329f;
   }
 
   .to {
 	align-self: flex-start;
+	background-color: #3f3a3a9f;
   }
 
