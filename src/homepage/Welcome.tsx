@@ -7,9 +7,9 @@ export default function Welcome() {
 		<h1 className="title">BlinkChat</h1>
 				<button className="createBtn">Create a room</button>
 				<div className="join">
-					<input type="number" placeholder='Room ID..' className="roomId" />
+					<input type="number" placeholder='Room No..' className="roomId" />
 					<button className='roomBtn'>Join</button>
 				</div>
 		</div>
 	)
-}
+}2

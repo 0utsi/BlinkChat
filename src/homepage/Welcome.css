@@ -11,7 +11,7 @@
 
 .title {
 	margin-bottom: 7rem;
-	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 	animation: blink 0.7s infinite alternate;
 }
 
@@ -28,7 +28,7 @@
 	letter-spacing: 5px;
 	background-color: inherit;
 	border: 1px solid white;
-	opacity: 0.75;
+	opacity: 0.7;
 }
 
 .createBtn:hover {
@@ -43,7 +43,7 @@
 	letter-spacing: 5px;
 	background-color: inherit;
 	border: 1px solid white;
-	opacity: 0.75;
+	opacity: 0.7;
 }
 
 .roomBtn:hover {
