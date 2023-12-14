@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 
 export default function ChatRoom() {
 	const { roomId } = useParams()
+	const [nick, setNick] = useState('')
+	const [isNick, setIsNick] = useState(true)
 	const [message, setMessage] = useState('')
 	const [messages, setMessages] = useState<{message: string, socketId: string | undefined}[]>([]);
 	const [socket, setSocket] = useState<Socket | undefined>(undefined)
@@ -34,23 +36,23 @@ export default function ChatRoom() {
 	};
 
 	useEffect(() => {
-		const receiveMessageHandler = (data: { message: string; socketId: string | undefined }) => {
+		socket?.on('receive_message', (data: { message: string; socketId: string | undefined }) => {
 			setMessages((prevMessages) => [...prevMessages, data]);
-		};
-
-		socket?.on('receive_message', receiveMessageHandler);
+		});
 		if(scrollRef.current)scrollRef.current.scrollIntoView()
 		return () => {
-			socket?.off('receive_message', receiveMessageHandler);
+			socket?.off('receive_message');
 		};
 	}, [socket]);
 
   return (
+	<>
     <div className="chat">
 		<main>
 			{messages.map((msg, index) => (
 				<div key={index} className={msg.socketId === socket?.id ? 'from message' : 'to message'}>
-				<p>{msg.message}</p>
+					<p id="nickname">{nick}</p>
+					<p>{msg.message}</p>
 				</div>
 			))}
 			<div ref={scrollRef} />
@@ -70,7 +72,11 @@ export default function ChatRoom() {
 				</svg>
 			</button>
 		</form>
-
     </div>
+		{isNick ? (<div className="nickInput">
+				<input placeholder='Nickname..' type="text" value={nick} onChange={(e) => setNick(e.target.value)}/>
+				<button className="setNickBtn" onClick={() => setIsNick(!isNick)}>+</button>
+		</div>) : ''}
+	</>
   );
 }
