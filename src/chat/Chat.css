@@ -92,7 +92,8 @@ main {
 
 .nickInput {
 	padding: 0.5rem;
-	border: 1px solid black;
+	width: 10rem;
+	border-radius: 2rem;
 	position: absolute;
 	top: 45%;
 	left: 50%;
@@ -102,4 +103,5 @@ main {
 .setNickBtn {
 	background-color: inherit;
 	border:none;
+	margin: 0;
 }
