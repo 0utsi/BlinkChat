@@ -2,15 +2,15 @@ import { useState, useEffect, useRef } from 'react';
 import io, { Socket } from 'socket.io-client';
 import './Chat.css'
 import { useParams } from "react-router-dom";
-
+import ChatMessages from './ChatMessages';
 export default function ChatRoom() {
 	const { roomId } = useParams()
-	const [nick, setNick] = useState('')
-	const [isNick, setIsNick] = useState(true)
-	const [message, setMessage] = useState('')
+	const [nick, setNick] = useState<string>('')
+	const [isNick, setIsNick] = useState<boolean>(true)
+	const [message, setMessage] = useState<string>('')
 	const [messages, setMessages] = useState<{message: string, socketId: string | undefined}[]>([]);
 	const [socket, setSocket] = useState<Socket | undefined>(undefined)
-	const scrollRef = useRef<HTMLDivElement>(null);
+	// const scrollRef = useRef<HTMLElement>(null);
 
 	useEffect(() => {
 		const newSocket = io("http://localhost:5174", {
@@ -39,7 +39,7 @@ export default function ChatRoom() {
 		socket?.on('receive_message', (data: { message: string; socketId: string | undefined }) => {
 			setMessages((prevMessages) => [...prevMessages, data]);
 		});
-		if(scrollRef.current)scrollRef.current.scrollIntoView()
+		// if(scrollRef.current)scrollRef.current.scrollIntoView()
 		return () => {
 			socket?.off('receive_message');
 		};
@@ -48,7 +48,7 @@ export default function ChatRoom() {
   return (
 	<>
     <div className="chat">
-		<main>
+		{/* <main>
 			{messages.map((msg, index) => (
 				<div key={index} className={msg.socketId === socket?.id ? 'from message' : 'to message'}>
 					<p id="nickname">{nick}</p>
@@ -56,7 +56,8 @@ export default function ChatRoom() {
 				</div>
 			))}
 			<div ref={scrollRef} />
-		</main>
+		</main> */}
+		<ChatMessages messages={messages} socket={socket?.id} nick={nick} />
 		<form className="manage">
 			<input
 				placeholder="Type.."
